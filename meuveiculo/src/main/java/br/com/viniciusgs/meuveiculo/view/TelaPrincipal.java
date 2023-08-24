@@ -70,6 +70,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu3.add(menuCadastroPais);
 
         jMenuItem1.setText("Estado");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem1);
 
         jMenu1.add(jMenu3);
@@ -127,6 +132,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao fechar o sistema.");
         }
     }//GEN-LAST:event_subMenuSairActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        try {
+            TelaEstadoConsulta telaEstadoConsulta = new TelaEstadoConsulta();
+            telaEstadoConsulta.carregarJanela();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível carregar a "
+                    + "janela de consulta de estados.");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments

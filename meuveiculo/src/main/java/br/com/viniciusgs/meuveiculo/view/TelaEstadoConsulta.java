@@ -4,8 +4,11 @@
  */
 package br.com.viniciusgs.meuveiculo.view;
 
+import br.com.viniciusgs.meuveiculo.controller.EstadoController;
 import br.com.viniciusgs.meuveiculo.controller.PaisController;
+import br.com.viniciusgs.meuveiculo.entity.Estado;
 import br.com.viniciusgs.meuveiculo.entity.Pais;
+import br.com.viniciusgs.meuveiculo.tables.TabelaEstadoConsulta;
 import br.com.viniciusgs.meuveiculo.tables.TabelaPaisConsulta;
 import br.com.viniciusgs.meuveiculo.utils.GerenciadorDeJanelas;
 import java.util.List;
@@ -15,20 +18,20 @@ import javax.swing.JOptionPane;
  *
  * @author FROTA01-PC
  */
-public class TelaPaisConsulta extends javax.swing.JInternalFrame {
+public class TelaEstadoConsulta extends javax.swing.JInternalFrame {
 
-    TelaPaisConsulta telaPaisConsulta = null;
+    TelaEstadoConsulta telaEstadoConsulta = null;
     TelaPrincipal telaPrincipal = null;
     GerenciadorDeJanelas gerenciadorDeJanelas = new GerenciadorDeJanelas();
 
-    PaisController paisController = new PaisController();
-    TabelaPaisConsulta tabelaPaisConsulta = new TabelaPaisConsulta();
+    EstadoController estadoController = new EstadoController();
+    TabelaEstadoConsulta tabelaEstadoConsulta = new TabelaEstadoConsulta();
 
-    public TelaPaisConsulta() {
+    public TelaEstadoConsulta() {
         initComponents();
 
-        List<Pais> pais = paisController.listarPais();
-        tabelaPaisConsulta.carregarTabelaPais(pais);
+        List<Estado> estado = estadoController.listarEstado();
+        tabelaEstadoConsulta.carregarTabelaEstado(estado);
     }
 
     /**
@@ -42,10 +45,10 @@ public class TelaPaisConsulta extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblPais = new javax.swing.JTable();
+        tblEstado = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtPesquisarPais = new javax.swing.JTextField();
+        txtPesquisarEstado = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnCadastrar = new javax.swing.JButton();
@@ -53,27 +56,50 @@ public class TelaPaisConsulta extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Consulta: Paises Cadastrados");
-        setToolTipText("Consulta: Paises Cadastrados");
+        setTitle("Consulta: Estados Cadastrados");
+        setToolTipText("Consulta: Estados Cadastrados");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        tblPais.setModel(new javax.swing.table.DefaultTableModel(
+        tblEstado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Id", "País"
+                "Id", "Estado", "País"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -84,20 +110,20 @@ public class TelaPaisConsulta extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblPais);
+        jScrollPane1.setViewportView(tblEstado);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setText("Pesquisar:");
 
-        txtPesquisarPais.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtPesquisarEstado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtPesquisarPaisKeyReleased(evt);
+                txtPesquisarEstadoKeyReleased(evt);
             }
         });
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("País:");
+        jLabel2.setText("Estado:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -109,7 +135,7 @@ public class TelaPaisConsulta extends javax.swing.JInternalFrame {
                 .addGap(76, 76, 76)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtPesquisarPais, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPesquisarEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -118,7 +144,7 @@ public class TelaPaisConsulta extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtPesquisarPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPesquisarEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -218,27 +244,28 @@ public class TelaPaisConsulta extends javax.swing.JInternalFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         try {
-            TelaPaisCadastro telaPaisCadastro = new TelaPaisCadastro();
-            telaPaisCadastro.carregarJanela();
+            TelaEstadoCadastro telaEstadoCadastro = new TelaEstadoCadastro();
+            telaEstadoCadastro.carregarJanela();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível carregar a "
-                    + "janela de cadastro de países.");
+                    + "janela de cadastro de estado.");
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limparCampos();
-        List<Pais> pais = paisController.listarPais();
-        tabelaPaisConsulta.carregarTabelaPais(pais);
+        List<Estado> estado = estadoController.listarEstado();
+        tabelaEstadoConsulta.carregarTabelaEstado(estado);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        TabelaPaisConsulta tabelaPaisConsulta = new TabelaPaisConsulta();
+        TabelaEstadoConsulta tabelaEstadoConsulta = new TabelaEstadoConsulta();
         try {
-            if (tblPais.getSelectedRow() >= 0) { //verifica se há algo selecionado na tabela
+            if (tblEstado.getSelectedRow() >= 0) { //verifica se há algo selecionado na tabela
                 //obtém o valor da coluna id da linha selecionada
-                String id = (String) tblPais.getValueAt(tblPais.getSelectedRow(), 0);
-                String nome = (String) tblPais.getValueAt(tblPais.getSelectedRow(), 1);
+                String id = (String) tblEstado.getValueAt(tblEstado.getSelectedRow(), 0);
+                String nome = (String) tblEstado.getValueAt(tblEstado.getSelectedRow(), 1);
+
                 //janela de confirmação
                 int resposta = JOptionPane.showConfirmDialog(this,
                         "Deseja mesmo excluir o País " + nome + "?");
@@ -247,30 +274,30 @@ public class TelaPaisConsulta extends javax.swing.JInternalFrame {
                     //realizando a exclusão
                     PaisController paisController = new PaisController();
                     paisController.excluir(Integer.parseInt(id));
-                    JOptionPane.showMessageDialog(this, "País excluído com sucesso");
+                    JOptionPane.showMessageDialog(this, "Estado excluído com sucesso");
                     //refazendo a pesquisa para atualizar a tabela na tela
 
-                    List<Pais> pais = paisController.listarPais();
-                    tabelaPaisConsulta.carregarTabelaPais(pais);
+                    List<Estado> estado = estadoController.listarEstado();
+                    tabelaEstadoConsulta.carregarTabelaEstado(estado);
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Ocorreu uma falha ao excluir o País.");
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha ao excluir o Estado.");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-    private void txtPesquisarPaisKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarPaisKeyReleased
-        PaisController paisController = new PaisController();
-        TabelaPaisConsulta tabelaPaisConsulta = new TabelaPaisConsulta();
+    private void txtPesquisarEstadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarEstadoKeyReleased
+        EstadoController estadoController = new EstadoController();
+        TabelaEstadoConsulta tabelaEstadoConsulta = new TabelaEstadoConsulta();
         try {
 
-            List<Pais> pais = paisController.listar(txtPesquisarPais.getText());
-            tabelaPaisConsulta.carregarTabelaPais(pais);
+            List<Estado> estado = estadoController.listar(txtPesquisarEstado.getText());
+            tabelaEstadoConsulta.carregarTabelaEstado(estado);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao pesquisar País.");
+            JOptionPane.showMessageDialog(null, "Erro ao pesquisar Estado.");
         }
-    }//GEN-LAST:event_txtPesquisarPaisKeyReleased
+    }//GEN-LAST:event_txtPesquisarEstadoKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -283,24 +310,24 @@ public class TelaPaisConsulta extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable tblPais;
-    private javax.swing.JTextField txtPesquisarPais;
+    public static javax.swing.JTable tblEstado;
+    private javax.swing.JTextField txtPesquisarEstado;
     // End of variables declaration//GEN-END:variables
 
     public void carregarJanela() {
 
-        if (telaPaisConsulta == null) {
-            telaPaisConsulta = new TelaPaisConsulta();
-            telaPrincipal.DesktopPanel.add(telaPaisConsulta);
+        if (telaEstadoConsulta == null) {
+            telaEstadoConsulta = new TelaEstadoConsulta();
+            telaPrincipal.DesktopPanel.add(telaEstadoConsulta);
         }
-        if (!telaPaisConsulta.isVisible()) {
-            telaPaisConsulta.setVisible(true);
+        if (!telaEstadoConsulta.isVisible()) {
+            telaEstadoConsulta.setVisible(true);
         }
-        telaPaisConsulta.toFront();
-        gerenciadorDeJanelas.setPosicao(telaPaisConsulta);
+        telaEstadoConsulta.toFront();
+        gerenciadorDeJanelas.setPosicao(telaEstadoConsulta);
     }
 
     public void limparCampos() {
-        txtPesquisarPais.setText("");
+        txtPesquisarEstado.setText("");
     }
 }

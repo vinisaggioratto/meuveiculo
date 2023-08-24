@@ -95,4 +95,23 @@ public class PaisController {
         }
         return pais;
     }
+
+    public List<Pais> retornarIdPais(String paisNome) {
+        EntityManager em = PersistenciaJPA.getEntityManager();
+        List paisList = null;
+        try {
+            String nomeConsulta = paisNome;
+            String textoQuery = "SELECT pais FROM Pais pais "
+                    + " WHERE pais.nome ="+paisNome;
+            Query consulta = em.createQuery(textoQuery);
+            paisList = consulta.getResultList();
+        }
+        finally {
+            PersistenciaJPA.closeEntityManager();
+        }
+        return paisList;
+    }
 }
+
+//consulta.setParameter(
+//                    "nome", paisNome.isEmpty() ? null : "%" + paisNome + "%");
