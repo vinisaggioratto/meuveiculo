@@ -28,17 +28,13 @@ import lombok.Setter;
 @Table(name = "pais")
 public class Pais {
 
-    public Pais(String nome) {
-        this.nome = nome;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String nome;
 
-    private static List<Pais> pais = new ArrayList<>();
+    private static List<Pais> paisList = new ArrayList<>();
 
     @Override
     public String toString() {

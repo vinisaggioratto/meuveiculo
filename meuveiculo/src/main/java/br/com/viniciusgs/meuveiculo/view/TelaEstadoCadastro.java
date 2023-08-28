@@ -8,9 +8,14 @@ import br.com.viniciusgs.meuveiculo.controller.EstadoController;
 import br.com.viniciusgs.meuveiculo.controller.PaisController;
 import br.com.viniciusgs.meuveiculo.entity.Estado;
 import br.com.viniciusgs.meuveiculo.entity.Pais;
+import br.com.viniciusgs.meuveiculo.persistence.PersistenciaJPA;
 import br.com.viniciusgs.meuveiculo.tables.TabelaEstadoConsulta;
 import br.com.viniciusgs.meuveiculo.tables.TabelaPaisConsulta;
 import br.com.viniciusgs.meuveiculo.utils.GerenciadorDeJanelas;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import java.awt.HeadlessException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -50,7 +55,7 @@ public class TelaEstadoCadastro extends javax.swing.JInternalFrame {
         btnCadastrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        cboEstado = new javax.swing.JComboBox<>();
+        cboPais = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setTitle("Cadastro de estados");
@@ -83,9 +88,9 @@ public class TelaEstadoCadastro extends javax.swing.JInternalFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("País:");
 
-        cboEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+        cboPais.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cboEstadoMouseClicked(evt);
+                cboPaisMouseClicked(evt);
             }
         });
 
@@ -108,7 +113,7 @@ public class TelaEstadoCadastro extends javax.swing.JInternalFrame {
                         .addComponent(btnCancelar))
                     .addComponent(idEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nomeEstado)
-                    .addComponent(cboEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cboPais, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -125,7 +130,7 @@ public class TelaEstadoCadastro extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrar)
@@ -162,9 +167,10 @@ public class TelaEstadoCadastro extends javax.swing.JInternalFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "Favor preencher o nome do Estado");
             }
-            String xpais = cboEstado.getSelectedItem().toString();
-            estado.setPais((Pais) paisController.retornarIdPais(xpais));
+            Pais pais = (Pais) paisController.retornarIdPais(cboPais.getSelectedItem().toString());
+            estado.setPais(pais);
             estadoController.cadastrar(estado);
+            
             List<Estado> estadoTabela = estadoController.listarEstado();
             tabelaEstadoConsulta.carregarTabelaEstado(estadoTabela);
         } catch (Exception e) {
@@ -176,24 +182,29 @@ public class TelaEstadoCadastro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        limparCampos();
+        limparCampos();        
         
         PaisController paisController = new PaisController();
-        String pais = cboEstado.getSelectedItem().toString();
-        System.out.println("País: " + pais);
-        //paisController.retornarIdPais(pais);
-        System.out.println("País ID: " + paisController.retornarIdPais(pais));
+        String pais = cboPais.getSelectedItem().toString();
+        System.out.println("País no combobox: " +pais);
+        //System.out.println("País: " + pais);
+        //List<Pais> paisLista = paisController.retornarIdPais(pais);
+        //Pais pais = (Pais) cboPais.getSelectedItem();
+        System.out.println("Pais retornado: ");
+        //paisController.buscarPaisPorNome(pais);
+        System.out.println("País retorno: " + paisController.retornarIdPais(pais));
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void cboEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboEstadoMouseClicked
+    private void cboPaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboPaisMouseClicked
 
-    }//GEN-LAST:event_cboEstadoMouseClicked
+    }//GEN-LAST:event_cboPaisMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cboEstado;
+    private javax.swing.JComboBox<String> cboPais;
     private javax.swing.JTextField idEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -222,15 +233,15 @@ public class TelaEstadoCadastro extends javax.swing.JInternalFrame {
 
     private void preencherCombo() {
         try {
-            EstadoController estadoController = new EstadoController();
-            List<Estado> estado = estadoController.listarEstado();
+            PaisController paisController = new PaisController();
+            List<Pais> pais = paisController.listarPais();
 
             // Adicionando os dados do ArrayList no JComboBox
-            cboEstado.addItem("-Selecione-");
-            for (int i = 0; i < estado.size(); i++) {
+            cboPais.addItem("-Selecione-");
+            for (int i = 0; i < pais.size(); i++) {
 
                 // Adicionando o nome do convênio ao JComboBox
-                cboEstado.addItem(estado.get(i).getNome());
+                cboPais.addItem(pais.get(i).getNome());
 
             } // fecha for
 

@@ -6,8 +6,10 @@ package br.com.viniciusgs.meuveiculo.controller;
 
 import br.com.viniciusgs.meuveiculo.entity.Pais;
 import br.com.viniciusgs.meuveiculo.persistence.PersistenciaJPA;
+import static br.com.viniciusgs.meuveiculo.persistence.PersistenciaJPA.entityManager;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -96,22 +98,26 @@ public class PaisController {
         return pais;
     }
 
-    public List<Pais> retornarIdPais(String paisNome) {
+    public Pais retornarIdPais(String nome) {
         EntityManager em = PersistenciaJPA.getEntityManager();
-        List paisList = null;
         try {
-            String nomeConsulta = paisNome;
-            String textoQuery = "SELECT pais FROM Pais pais "
-                    + " WHERE pais.nome ="+paisNome;
-            Query consulta = em.createQuery(textoQuery);
-            paisList = consulta.getResultList();
-        }
-        finally {
+
+            Query consulta = em.createQuery("SELECT p FROM Pais p WHERE p.nome = :nome");
+            consulta.setParameter("nome", nome);
+            Pais pais = (Pais) consulta.getSingleResult();
+            
+            System.out.println("País retornado no método: " + pais);
+            return pais;
+        } finally {
             PersistenciaJPA.closeEntityManager();
         }
-        return paisList;
-    }
+    }    
+//    public Pais buscarPaisPorNome(String nome) {
+//        TypedQuery<Pais> query = entityManager.createQuery(
+//                "SELECT p FROM Pais p WHERE p.nome = :nome", Pais.class);
+//        query.setParameter("nome", nome);
+//        System.out.println("Pais: ");
+//        
+//        return query.getSingleResult();
+//    }
 }
-
-//consulta.setParameter(
-//                    "nome", paisNome.isEmpty() ? null : "%" + paisNome + "%");

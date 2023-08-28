@@ -268,12 +268,12 @@ public class TelaEstadoConsulta extends javax.swing.JInternalFrame {
 
                 //janela de confirmação
                 int resposta = JOptionPane.showConfirmDialog(this,
-                        "Deseja mesmo excluir o País " + nome + "?");
+                        "Deseja mesmo excluir o Estado " + nome + "?");
                 if (resposta == 0)//0- yes, 1- no, 2- cancel
                 {
                     //realizando a exclusão
-                    PaisController paisController = new PaisController();
-                    paisController.excluir(Integer.parseInt(id));
+                    EstadoController estadoController = new EstadoController();
+                    estadoController.excluir(Integer.parseInt(id));
                     JOptionPane.showMessageDialog(this, "Estado excluído com sucesso");
                     //refazendo a pesquisa para atualizar a tabela na tela
 

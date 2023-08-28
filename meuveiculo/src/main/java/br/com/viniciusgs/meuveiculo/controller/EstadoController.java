@@ -5,6 +5,7 @@
 package br.com.viniciusgs.meuveiculo.controller;
 
 import br.com.viniciusgs.meuveiculo.entity.Estado;
+import br.com.viniciusgs.meuveiculo.entity.Pais;
 import br.com.viniciusgs.meuveiculo.persistence.PersistenciaJPA;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -78,6 +79,22 @@ public class EstadoController {
             PersistenciaJPA.closeEntityManager();
         }
     }
+    
+//        public List<Pais> retornarIdPais(String estadoNome) {
+//        EntityManager em = PersistenciaJPA.getEntityManager();
+//        try {
+//            Pais p = new Pais();
+//            Query consulta = em.createQuery("select p.id from Estado e "
+//                    + "inner join e.pais p where e.nome = '"+estadoNome+"'");
+//            
+//            List<Pais> paisList = consulta.getResultList();
+//            System.out.println("Conteudo da pesquisa: " + paisList);
+//            return paisList;
+//        } finally {
+//            PersistenciaJPA.closeEntityManager();
+//        }
+//
+//    }
 
     public List<Estado> listar(String filtroDescricao) {
         EntityManager em = PersistenciaJPA.getEntityManager();
